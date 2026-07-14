@@ -1,10 +1,578 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<title>Bradley-AP</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Bradley-AP.github.io | Bradley-AP</title>
+
+<meta name="description" content="Bradley Park - Full Stack Developer, Systems Architect, Software Engineer">
+
+<meta http-equiv="refresh" content="6; url=https://bradley-park.dev">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+
+    background:#050505;
+    color:white;
+    font-family:'VT323',Segoe UI,Arial,sans-serif;
+    font-size:1.3rem;
+    overflow-x:hidden;
+}
+
+/* pixel font utility */
+
+.pixel-font{
+    font-family:'Press Start 2P',Segoe UI,Arial,sans-serif;
+}
+
+/* background */
+
+body::before{
+
+    content:"";
+    position:fixed;
+    inset:0;
+
+    background:
+
+    radial-gradient(circle at 20% 20%,rgba(255,0,0,.10),transparent 30%),
+    radial-gradient(circle at 80% 60%,rgba(255,0,0,.07),transparent 35%),
+    linear-gradient(#050505,#000);
+
+    z-index:-3;
+}
+
+#circuit-bg{
+
+    position:fixed;
+    inset:0;
+    width:100%;
+    height:100%;
+
+    z-index:-2;
+
+    display:block;
+}
+
+/* hero */
+
+.hero{
+
+    min-height:100vh;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+
+    text-align:center;
+    padding:40px;
+}
+
+.hero h1{
+
+    font-family:'Press Start 2P',Segoe UI,Arial,sans-serif;
+    font-size:clamp(1.8rem,6vw,3.6rem);
+    line-height:1.4;
+    color:#ff3d3d;
+
+    text-shadow:
+
+        0 0 10px red,
+        0 0 35px rgba(255,0,0,.5);
+
+    margin-bottom:24px;
+}
+
+.hero h2{
+
+    font-family:'Press Start 2P',Segoe UI,Arial,sans-serif;
+    font-size:.85rem;
+    line-height:2;
+    font-weight:400;
+    letter-spacing:1px;
+    color:#ddd;
+
+    margin-bottom:34px;
+}
+
+.hero p{
+
+    max-width:900px;
+
+    font-size:1.4rem;
+    line-height:1.7;
+
+    color:#bfbfbf;
+}
+
+.button{
+
+    margin-top:50px;
+
+    padding:18px 42px;
+
+    border:2px solid #ff2b2b;
+
+    text-decoration:none;
+    color:white;
+
+    font-family:'Press Start 2P',Segoe UI,Arial,sans-serif;
+    font-size:.75rem;
+
+    border-radius:8px;
+
+    transition:.3s;
+}
+
+.button:hover{
+
+    background:#ff2020;
+
+    box-shadow:
+
+        0 0 20px red,
+        0 0 50px rgba(255,0,0,.5);
+
+    transform:translateY(-3px);
+}
+
+.redirect{
+
+    margin-top:24px;
+    color:#888;
+    font-size:1.2rem;
+}
+
+/* projects */
+
+.projects{
+
+    padding:100px 8%;
+}
+
+.projects h2{
+
+    font-family:'Press Start 2P',Segoe UI,Arial,sans-serif;
+    text-align:center;
+    font-size:1.8rem;
+    line-height:1.6;
+    color:#ff4040;
+
+    margin-bottom:60px;
+}
+
+.grid{
+
+    display:grid;
+
+    grid-template-columns:
+
+        repeat(auto-fit,minmax(330px,1fr));
+
+    gap:35px;
+}
+
+.card{
+
+    background:#111;
+
+    border:1px solid #2b2b2b;
+
+    border-left:5px solid red;
+
+    border-radius:14px;
+
+    padding:35px;
+
+    transition:.35s;
+}
+
+.card:hover{
+
+    transform:translateY(-8px);
+
+    border-color:red;
+
+    box-shadow:
+
+        0 0 30px rgba(255,0,0,.3);
+}
+
+.card h3{
+
+    font-family:'Press Start 2P',Segoe UI,Arial,sans-serif;
+    font-size:1rem;
+    line-height:1.6;
+    color:#ff5d5d;
+
+    margin-bottom:20px;
+}
+
+.card p{
+
+    color:#c8c8c8;
+
+    font-size:1.3rem;
+    line-height:1.5;
+}
+
+.card a{
+
+    display:inline-block;
+
+    margin-top:25px;
+
+    color:#ff5b5b;
+
+    font-family:'Press Start 2P',Segoe UI,Arial,sans-serif;
+    font-size:.7rem;
+
+    text-decoration:none;
+}
+
+footer{
+
+    padding:80px 30px;
+
+    text-align:center;
+
+    color:#666;
+
+    font-size:1.2rem;
+}
+
+.fade{
+
+    opacity:0;
+    transform:translateY(40px);
+
+    transition:1s;
+}
+
+.fade.visible{
+
+    opacity:1;
+    transform:translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce){
+    #circuit-bg{
+        display:none;
+    }
+}
+
+</style>
 </head>
+
 <body>
-	<h1>Hello from GitHub Pages!</h1>
-	<p>test lets see if it works..</p>
+
+<canvas id="circuit-bg"></canvas>
+
+<section class="hero">
+
+<h1>Bradley Park</h1>
+
+<h2>Full Stack Developer • Systems Architect • Software Engineer</h2>
+
+<p>
+
+I design software from the ground up—ranging from low-level systems and
+compiler-adjacent tooling to distributed applications, AI-assisted workflows,
+procedural generation, circuit synthesis, and interactive user experiences.
+My projects emphasize extensibility, performance, automation, and developer
+productivity.
+
+</p>
+
+<a class="button" href="#projects">
+View Projects
+</a>
+
+<div class="redirect">
+
+Redirecting to
+<strong>bradley-park.dev</strong>
+in a few seconds...
+
+</div>
+
+</section>
+
+<section class="projects" id="projects">
+
+<h2>Featured Projects</h2>
+
+<div class="grid">
+
+<div class="card fade">
+
+<h3>Glyph-Weaver Text Editor</h3>
+
+<p>
+
+A modern developer-focused text editor featuring both graphical and terminal
+interfaces, real-time live multiplayer collaboration, an extensible plugin
+architecture, and AI ecosystem integration. Built around flexibility and
+high-performance workflows while supporting collaborative development,
+automation, and future language tooling.
+
+</p>
+
+<a href="page1.html">
+Explore →
+</a>
+
+</div>
+
+<div class="card fade">
+
+<h3>Bit-Weaver Circuit Design</h3>
+
+<p>
+
+A digital logic and computer architecture platform capable of synthesizing
+complete circuit layouts directly from truth tables, generating multi-tick
+sequential logic, automatically designing CPUs with configurable instruction
+sets, memory layouts, registers, and execution pipelines, while supporting
+plugins that export generated hardware designs into Minecraft Redstone for
+simulation and visualization.
+
+</p>
+
+<a href="page2.html">
+Explore →
+</a>
+
+</div>
+
+<div class="card fade">
+
+<h3>VisionAI Accessibility Platform</h3>
+
+<p>
+
+A computer vision and machine learning platform exploring real-time screen
+analysis, gaze tracking, facial-expression controls, customizable calibration,
+and user-trained recognition models to improve accessibility and alternative
+input methods for interactive software, particularly for individuals with
+physical disabilities.
+
+</p>
+
+<a href="page3.html">
+Explore →
+</a>
+
+</div>
+
+<div class="card fade">
+
+<h3>Project IV</h3>
+
+<p>
+
+A future software engineering project currently under development.
+Additional information and technical documentation will be published here
+as development progresses.
+
+</p>
+
+<a href="page4.html">
+Coming Soon →
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+<footer>
+
+© 2026 Bradley Park
+
+</footer>
+
+<script>
+
+const observer = new IntersectionObserver(entries=>{
+
+    entries.forEach(entry=>{
+
+        if(entry.isIntersecting){
+
+            entry.target.classList.add("visible");
+
+        }
+
+    });
+
+});
+
+document.querySelectorAll(".fade").forEach(e=>observer.observe(e));
+
+</script>
+
+<script>
+/*
+  Circuit pathfinding background.
+  Kept cheap on purpose:
+  - low-res grid (walkers snap to a 26px cell grid, not per-pixel)
+  - only a handful of walkers, each drawing one short segment per tick
+  - grid steps are throttled to ~16 ticks/sec via a timestamp check inside rAF
+    (rAF itself still runs at display refresh, but the canvas is only
+    touched on the throttled ticks)
+  - "reset" is done per-walker (respawn on wall hit / expired life) plus a
+    faint full-canvas fade each tick, so old trails dissolve smoothly
+    instead of needing an expensive full clear + redraw
+*/
+(function(){
+
+    const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(reduceMotion) return;
+
+    const canvas = document.getElementById('circuit-bg');
+    if(!canvas) return;
+    const ctx = canvas.getContext('2d');
+
+    const CELL = 26;
+    const NUM_WALKERS = 7;
+    const TICK_MS = 55;
+    const TURN_CHANCE = 0.20;
+
+    let w, h, cols, rows;
+
+    function resize(){
+        w = canvas.width = window.innerWidth;
+        h = canvas.height = window.innerHeight;
+        cols = Math.ceil(w / CELL) + 1;
+        rows = Math.ceil(h / CELL) + 1;
+        ctx.fillStyle = '#000';
+        ctx.fillRect(0, 0, w, h);
+    }
+
+    const DIRS = [[1,0],[-1,0],[0,1],[0,-1]];
+
+    function randDir(){
+        return DIRS[(Math.random() * 4) | 0];
+    }
+
+    function makeWalker(){
+        return {
+            x: (Math.random() * cols) | 0,
+            y: (Math.random() * rows) | 0,
+            dir: randDir(),
+            life: 70 + ((Math.random() * 140) | 0)
+        };
+    }
+
+    let walkers = [];
+
+    function init(){
+        resize();
+        walkers = [];
+        for(let i = 0; i < NUM_WALKERS; i++){
+            walkers.push(makeWalker());
+        }
+    }
+
+    function perpendicular(dir){
+        return dir[0] !== 0 ? DIRS[2 + ((Math.random() * 2) | 0)] : DIRS[(Math.random() * 2) | 0];
+    }
+
+    function tick(){
+
+        // gentle fade instead of a hard clear -> trails dissolve, no reset flash
+        ctx.fillStyle = 'rgba(0,0,0,0.045)';
+        ctx.fillRect(0, 0, w, h);
+
+        ctx.lineWidth = 2;
+        ctx.shadowColor = 'rgba(255,20,20,0.85)';
+        ctx.shadowBlur = 7;
+        ctx.strokeStyle = 'rgba(255,45,45,0.9)';
+
+        for(let i = 0; i < walkers.length; i++){
+            const wlk = walkers[i];
+
+            if(Math.random() < TURN_CHANCE){
+                wlk.dir = perpendicular(wlk.dir);
+            }
+
+            const nx = wlk.x + wlk.dir[0];
+            const ny = wlk.y + wlk.dir[1];
+
+            const x0 = wlk.x * CELL + CELL / 2;
+            const y0 = wlk.y * CELL + CELL / 2;
+            const x1 = nx * CELL + CELL / 2;
+            const y1 = ny * CELL + CELL / 2;
+
+            ctx.beginPath();
+            ctx.moveTo(x0, y0);
+            ctx.lineTo(x1, y1);
+            ctx.stroke();
+
+            ctx.fillStyle = 'rgba(255,110,110,0.95)';
+            ctx.fillRect(x1 - 1, y1 - 1, 2, 2);
+
+            wlk.x = nx;
+            wlk.y = ny;
+            wlk.life--;
+
+            if(wlk.x < 0 || wlk.x >= cols || wlk.y < 0 || wlk.y >= rows || wlk.life <= 0){
+                walkers[i] = makeWalker();
+            }
+        }
+    }
+
+    let lastTick = 0;
+    let rafId;
+
+    function loop(ts){
+        if(ts - lastTick >= TICK_MS){
+            lastTick = ts;
+            tick();
+        }
+        rafId = requestAnimationFrame(loop);
+    }
+
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(init, 200);
+    });
+
+    // pause the loop when the tab isn't visible to save cycles
+    document.addEventListener('visibilitychange', () => {
+        if(document.hidden){
+            cancelAnimationFrame(rafId);
+        } else {
+            lastTick = 0;
+            rafId = requestAnimationFrame(loop);
+        }
+    });
+
+    init();
+    rafId = requestAnimationFrame(loop);
+
+})();
+</script>
+
 </body>
 </html>
